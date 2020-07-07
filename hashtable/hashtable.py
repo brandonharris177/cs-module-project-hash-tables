@@ -127,10 +127,25 @@ class HashTable:
         """
         # Your code here
         index = self.hash_index(key)
+        current_Node = self.capacity[index]
 
-        if (self.capacity[index].key == key):
-            self.capacity[index] = None
+        # if (self.capacity[index].key == key):
+        #     self.capacity[index] = None
+        # else:
+        
+        if current_Node is None:
+            print("Key not found")
+        elif current_Node.key == key:
+            self.capacity[index] = current_Node.next
         else:
+            #loop through the list
+            while current_Node.next is not None:
+            #find value
+                if current_Node.next.key == key:
+                    #return the node
+                    current_Node.next = current_Node.next.next
+                    break
+                current_Node = current_Node.next
             print("Key not found")
 
 
@@ -210,6 +225,7 @@ class HashTable:
 
 #     print("")
 
+
 # ht = HashTable(8)
 
 # ht.put("key-0", "val-0")
@@ -223,6 +239,27 @@ class HashTable:
 # ht.put("key-8", "val-8")
 # ht.put("key-9", "val-9")
 
+# # print(ht.get("key-0"))
+# # print(ht.get("key-1"))
+# # print(ht.get("key-2"))
+# # print(ht.get("key-3"))
+# # print(ht.get("key-4"))
+# # print(ht.get("key-5"))
+# # print(ht.get("key-6"))
+# # print(ht.get("key-7"))
+# # print(ht.get("key-8"))
+# # print(ht.get("key-9"))
+
+# ht.delete("key-7")
+# ht.delete("key-6")
+# ht.delete("key-5")
+# ht.delete("key-4")
+# ht.delete("key-3")
+# ht.delete("key-2")
+# ht.delete("key-1")
+# ht.delete("key-0")
+
+# print(ht.get("key-0"))
 # print(ht.get("key-1"))
 # print(ht.get("key-2"))
 # print(ht.get("key-3"))
@@ -230,5 +267,11 @@ class HashTable:
 # print(ht.get("key-5"))
 # print(ht.get("key-6"))
 # print(ht.get("key-7"))
+# print(ht.get("key-8"))
+# print(ht.get("key-9"))
+
+# ht.delete("key-9")
+# ht.delete("key-8")
+
 # print(ht.get("key-8"))
 # print(ht.get("key-9"))
