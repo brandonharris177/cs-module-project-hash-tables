@@ -99,24 +99,19 @@ class HashTable:
         index = self.hash_index(key)
         current_Node = self.capacity[index]
         if current_Node is None:
-            # print("put")
             self.capacity[index] = HashTableEntry(key, value)
             self.items += 1
             if self.get_load_factor() > 0.7:
                 self.resize(self.get_num_slots() * 2)
-            # print(current_Node.key)
-            # print(current_Node.value)
         else:
             #loop through the list
             while current_Node is not None:
             #find value
                 if current_Node.key == key:
-                    #return the node
                     current_Node.value = value
                     break
                 current_Node = current_Node.next
             if current_Node is None:
-                # print("got here")
                 next_value = self.capacity[index]
                 self.capacity[index] = HashTableEntry(key, value)
                 self.capacity[index].next = next_value
@@ -137,10 +132,6 @@ class HashTable:
         # Your code here
         index = self.hash_index(key)
         current_Node = self.capacity[index]
-
-        # if (self.capacity[index].key == key):
-        #     self.capacity[index] = None
-        # else:
         
         if current_Node is None:
             print("Key not found")
@@ -152,7 +143,6 @@ class HashTable:
             while current_Node.next is not None:
             #find value
                 if current_Node.next.key == key:
-                    #return the node
                     current_Node.next = current_Node.next.next
                     self.items -= 1
                     break
@@ -170,20 +160,12 @@ class HashTable:
         """
         # Your code here
         index = self.hash_index(key)
-        
-        # if (self.capacity[index] and self.capacity[index].key == key):
-        #     return self.capacity[index].value
-        # else:
-        #     return None
 
         current_Node = self.capacity[index]
-        # print(current_Node)
         #loop through the list
         while current_Node is not None:
-            # print(current_Node)
         #find value
             if current_Node.key == key:
-                # print("found")
                 #return the node
                 return current_Node.value
             current_Node = current_Node.next
@@ -199,15 +181,11 @@ class HashTable:
         """
         # Your code here
         new_hash_table = HashTable(new_capacity)
-        # print("fired")
         for table in self.capacity:
-            # print("1")
             loop_table = table
             while loop_table is not None:
-                # print("2")
                 new_hash_table.put(table.key, table.value)
                 loop_table = loop_table.next
-                # print("3")
         self.capacity = new_hash_table.capacity
 
 # if __name__ == "__main__":
