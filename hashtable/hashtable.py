@@ -20,10 +20,11 @@ class HashTable:
     Implement this.
     """
 
-    def __init__(self, capacity):
+    def __init__(self, capacity, items=0):
         # Your code here
         # Sets the capacity to an array of Nones with the length equal to the capacity
         self.capacity = [None] * capacity
+        self.items = items
 
 
     def get_num_slots(self):
@@ -47,6 +48,8 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        load_factor = self.items/self.get_num_slots()
+        return load_factor
 
 
     def fnv1(self, key):
@@ -98,6 +101,9 @@ class HashTable:
         if current_Node is None:
             # print("put")
             self.capacity[index] = HashTableEntry(key, value)
+            self.items += 1
+            if self.get_load_factor() > 0.7:
+                self.resize(self.get_num_slots() * 2)
             # print(current_Node.key)
             # print(current_Node.value)
         else:
@@ -114,6 +120,9 @@ class HashTable:
                 next_value = self.capacity[index]
                 self.capacity[index] = HashTableEntry(key, value)
                 self.capacity[index].next = next_value
+                self.items += 1
+                if self.get_load_factor() > 0.7:
+                    self.resize(self.get_num_slots() * 2)
         
 
 
@@ -137,6 +146,7 @@ class HashTable:
             print("Key not found")
         elif current_Node.key == key:
             self.capacity[index] = current_Node.next
+            self.items -= 1
         else:
             #loop through the list
             while current_Node.next is not None:
@@ -144,6 +154,7 @@ class HashTable:
                 if current_Node.next.key == key:
                     #return the node
                     current_Node.next = current_Node.next.next
+                    self.items -= 1
                     break
                 current_Node = current_Node.next
             print("Key not found")
@@ -187,26 +198,41 @@ class HashTable:
         Implement this.
         """
         # Your code here
-
-
+        new_hash_table = HashTable(new_capacity)
+        # print("fired")
+        for table in self.capacity:
+            # print("1")
+            loop_table = table
+            while loop_table is not None:
+                # print("2")
+                new_hash_table.put(table.key, table.value)
+                loop_table = loop_table.next
+                # print("3")
+        self.capacity = new_hash_table.capacity
 
 # if __name__ == "__main__":
-#     ht = HashTable(8)
+# ht = HashTable(8)
 
-#     ht.put("line_1", "'Twas brillig, and the slithy toves")
-#     ht.put("line_2", "Did gyre and gimble in the wabe:")
-#     ht.put("line_3", "All mimsy were the borogoves,")
-#     ht.put("line_4", "And the mome raths outgrabe.")
-#     ht.put("line_5", '"Beware the Jabberwock, my son!')
-#     ht.put("line_6", "The jaws that bite, the claws that catch!")
-#     ht.put("line_7", "Beware the Jubjub bird, and shun")
-#     ht.put("line_8", 'The frumious Bandersnatch!"')
-#     ht.put("line_9", "He took his vorpal sword in hand;")
-#     ht.put("line_10", "Long time the manxome foe he sought--")
-#     ht.put("line_11", "So rested he by the Tumtum tree")
-#     ht.put("line_12", "And stood awhile in thought.")
+# ht.put("line_1", "'Twas brillig, and the slithy toves")
+# ht.put("line_2", "Did gyre and gimble in the wabe:")
+# ht.put("line_3", "All mimsy were the borogoves,")
+# ht.put("line_4", "And the mome raths outgrabe.")
+# ht.put("line_5", '"Beware the Jabberwock, my son!')
+# print(len(ht.capacity))
+# ht.put("line_6", "The jaws that bite, the claws that catch!")
+# print(len(ht.capacity))
+# ht.put("line_7", "Beware the Jubjub bird, and shun")
+# ht.put("line_8", 'The frumious Bandersnatch!"')
+# ht.put("line_9", "He took his vorpal sword in hand;")
+# ht.put("line_10", "Long time the manxome foe he sought--")
+# ht.put("line_11", "So rested he by the Tumtum tree")
+# ht.put("line_12", "And stood awhile in thought.")
 
-#     print("")
+# print(ht.items)
+
+# ht.delete("line_12")
+
+# print(ht.items)
 
 #     # Test storing beyond capacity
 #     for i in range(1, 13):
@@ -224,54 +250,3 @@ class HashTable:
 #         print(ht.get(f"line_{i}"))
 
 #     print("")
-
-
-# ht = HashTable(8)
-
-# ht.put("key-0", "val-0")
-# ht.put("key-1", "val-1")
-# ht.put("key-2", "val-2")
-# ht.put("key-3", "val-3")
-# ht.put("key-4", "val-4")
-# ht.put("key-5", "val-5")
-# ht.put("key-6", "val-6")
-# ht.put("key-7", "val-7")
-# ht.put("key-8", "val-8")
-# ht.put("key-9", "val-9")
-
-# # print(ht.get("key-0"))
-# # print(ht.get("key-1"))
-# # print(ht.get("key-2"))
-# # print(ht.get("key-3"))
-# # print(ht.get("key-4"))
-# # print(ht.get("key-5"))
-# # print(ht.get("key-6"))
-# # print(ht.get("key-7"))
-# # print(ht.get("key-8"))
-# # print(ht.get("key-9"))
-
-# ht.delete("key-7")
-# ht.delete("key-6")
-# ht.delete("key-5")
-# ht.delete("key-4")
-# ht.delete("key-3")
-# ht.delete("key-2")
-# ht.delete("key-1")
-# ht.delete("key-0")
-
-# print(ht.get("key-0"))
-# print(ht.get("key-1"))
-# print(ht.get("key-2"))
-# print(ht.get("key-3"))
-# print(ht.get("key-4"))
-# print(ht.get("key-5"))
-# print(ht.get("key-6"))
-# print(ht.get("key-7"))
-# print(ht.get("key-8"))
-# print(ht.get("key-9"))
-
-# ht.delete("key-9")
-# ht.delete("key-8")
-
-# print(ht.get("key-8"))
-# print(ht.get("key-9"))
