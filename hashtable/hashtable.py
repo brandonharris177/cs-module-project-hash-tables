@@ -94,8 +94,27 @@ class HashTable:
         """
         # Your code here
         index = self.hash_index(key)
-        if self.capacity[index] is None:
+        current_Node = self.capacity[index]
+        if current_Node is None:
+            # print("put")
             self.capacity[index] = HashTableEntry(key, value)
+            # print(current_Node.key)
+            # print(current_Node.value)
+        else:
+            #loop through the list
+            while current_Node is not None:
+            #find value
+                if current_Node.key == key:
+                    #return the node
+                    current_Node.value = value
+                    break
+                current_Node = current_Node.next
+            if current_Node is None:
+                # print("got here")
+                next_value = self.capacity[index]
+                self.capacity[index] = HashTableEntry(key, value)
+                self.capacity[index].next = next_value
+        
 
 
     def delete(self, key):
@@ -132,10 +151,13 @@ class HashTable:
         #     return None
 
         current_Node = self.capacity[index]
+        # print(current_Node)
         #loop through the list
         while current_Node is not None:
+            # print(current_Node)
         #find value
             if current_Node.key == key:
+                # print("found")
                 #return the node
                 return current_Node.value
             current_Node = current_Node.next
@@ -188,11 +210,25 @@ class HashTable:
 
 #     print("")
 
-ht = HashTable(0x10000)
+# ht = HashTable(8)
 
-ht.put("key-0", "val-0")
-ht.put("key-1", "val-1")
-ht.put("key-2", "val-2")
+# ht.put("key-0", "val-0")
+# ht.put("key-1", "val-1")
+# ht.put("key-2", "val-2")
+# ht.put("key-3", "val-3")
+# ht.put("key-4", "val-4")
+# ht.put("key-5", "val-5")
+# ht.put("key-6", "val-6")
+# ht.put("key-7", "val-7")
+# ht.put("key-8", "val-8")
+# ht.put("key-9", "val-9")
 
-return_value = ht.get("key-0")
-print(return_value)
+# print(ht.get("key-1"))
+# print(ht.get("key-2"))
+# print(ht.get("key-3"))
+# print(ht.get("key-4"))
+# print(ht.get("key-5"))
+# print(ht.get("key-6"))
+# print(ht.get("key-7"))
+# print(ht.get("key-8"))
+# print(ht.get("key-9"))
