@@ -94,7 +94,8 @@ class HashTable:
         """
         # Your code here
         index = self.hash_index(key)
-        self.capacity[index] = HashTableEntry(key, value)
+        if self.capacity[index] is None:
+            self.capacity[index] = HashTableEntry(key, value)
 
 
     def delete(self, key):
@@ -125,10 +126,20 @@ class HashTable:
         # Your code here
         index = self.hash_index(key)
         
-        if (self.capacity[index] and self.capacity[index].key == key):
-            return self.capacity[index].value
-        else:
-            return None
+        # if (self.capacity[index] and self.capacity[index].key == key):
+        #     return self.capacity[index].value
+        # else:
+        #     return None
+
+        current_Node = self.capacity[index]
+        #loop through the list
+        while current_Node is not None:
+        #find value
+            if current_Node.key == key:
+                #return the node
+                return current_Node.value
+            current_Node = current_Node.next
+        return None
 
 
     def resize(self, new_capacity):
@@ -176,3 +187,12 @@ class HashTable:
 #         print(ht.get(f"line_{i}"))
 
 #     print("")
+
+ht = HashTable(0x10000)
+
+ht.put("key-0", "val-0")
+ht.put("key-1", "val-1")
+ht.put("key-2", "val-2")
+
+return_value = ht.get("key-0")
+print(return_value)
