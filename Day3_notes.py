@@ -3,14 +3,13 @@
 # cache = {}
 
 # def fib(n):
-# if n < = 1
+# if n <= 1
 #     return n
-
-# if n in cache:
+ 
+#     if n not in cache:
+#         cache[n] = fib(n-1) + fib(n-2)
+# ​
 #     return cache[n]
-
-# cache[n] = fib(n-1) + fib(n-2)
-# return cache[n]
 
 ####################lookup table#######################
 
