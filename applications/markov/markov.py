@@ -11,8 +11,11 @@ with open("input.txt") as f:
 following = {}
 
 for word in words:
-    if 
-        words[word] = words[word+1]
+    words[word] = []
+
+for word in words:
+    if words[word+1]:
+        words[word] = words[words].append(words[word+1])
 
 print(words)
 
